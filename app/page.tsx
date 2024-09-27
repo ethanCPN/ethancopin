@@ -1,101 +1,191 @@
-import Image from "next/image";
+'use client'
+
+import Link from 'next/link'
+import { useState } from 'react'
+import { useTheme } from 'next-themes'
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Button } from "@/components/ui/button"
+import { Moon, Sun } from 'lucide-react'
+
+const techSkills = [
+    { name: 'JavaScript', info: 'Expérience en développement front-end/back-end avec Node.js et Angular' },
+    { name: 'HTML/CSS', info: 'Création de sites web responsives et esthétiques' },
+    { name: 'PHP', info: 'Développement de sites web avec Laravel utilisant une API' },
+    { name: 'SQL', info: 'Gestion de bases de données relationnelles : PSQL, SQLite' },
+    { name: 'Python', info: 'Scripting, analyse de données et machine learning' },
+    { name: 'Java', info: 'Développement d\'applications et utilisation de JavaFX' },
+    { name: 'C#', info: 'Développement de jeux avec Unity' },
+    { name: 'Git', info: 'Contrôle de version et collaboration sur des projets (GitLab)' }
+]
+
+const softSkills = [
+    { name: 'Communication', info: 'Capacité à exprimer clairement des idées complexes' },
+    { name: 'Travail d\'équipe', info: 'Collaboration efficace dans des environnements multidisciplinaires' },
+    { name: 'Résolution de problèmes', info: 'Approche analytique et créative pour surmonter les défis' },
+    { name: 'Adaptabilité', info: 'Flexibilité face aux changements rapides de technologie et de méthodologie' },
+    { name: 'Gestion du temps', info: 'Priorisation efficace des tâches et respect des délais' },
+    { name: 'Apprentissage continu', info: 'Passion pour l\'acquisition de nouvelles compétences et technologies' },
+    { name: 'Leadership', info: 'Capacité à guider et motiver une équipe vers un objectif commun' },
+    { name: 'Créativité', info: 'Approche innovante dans la conception de solutions' }
+]
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    const [openTechPopover, setOpenTechPopover] = useState<string | null>(null)
+    const [openSoftPopover, setOpenSoftPopover] = useState<string | null>(null)
+    const { theme, setTheme } = useTheme()
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    const scrollToSection = (e: React.MouseEvent, id: string) => {
+        e.preventDefault()
+        const element = document.getElementById(id)
+        element?.scrollIntoView({ behavior: 'smooth' })
+    }
+
+    return (
+        <div className="min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-200">
+            {/* Header */}
+            <header className="fixed w-full z-50 bg-white dark:bg-gray-800 shadow-sm">
+                <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
+                    <Link href="/" className="text-xl font-bold text-gray-800 dark:text-white"
+                          onClick={(e) => scrollToSection(e, 'about')}>Ethan COPIN</Link>
+                    <ul className="flex space-x-4 items-center">
+                        <li><Link href="#skills"
+                                  className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white"
+                                  onClick={(e) => scrollToSection(e, 'skills')}>Compétences</Link></li>
+                        <li><Link href="#projects"
+                                  className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white"
+                                  onClick={(e) => scrollToSection(e, 'projects')}>Projets</Link></li>
+                        <li><Link href="#contact"
+                                  className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white"
+                                  onClick={(e) => scrollToSection(e, 'contact')}>Contact</Link></li>
+                        <li>
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                                className="ml-4"
+                            >
+                                <Sun
+                                    className="h-[1.5rem] w-[1.5rem] text-yellow-500 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"/>
+                                <Moon
+                                    className="absolute h-[1.5rem] w-[1.5rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"/>
+                                <span className="sr-only">Toggle theme</span>
+                            </Button>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+
+            <main className="container mx-auto px-4 py-8">
+                {/* Hero Section */}
+                <section id="about" className="text-center py-20">
+                    <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">Ethan COPIN</h1>
+                    <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+                        Développeur informatique | en Alternance chez{" "}
+                        <a className="underline" href="https://talan.com/" target="_blank" rel="noopener noreferrer">
+                            Talan
+                        </a>
+                    </p>
+                    <p className="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
+                        Étudiant en 3ème année de BUT Informatique, je suis passionné par la programmation et la
+                        technologie moderne, notamment l&apos;intelligence artificielle.
+                    </p>
+                </section>
+
+                {/* TechSkills Section */}
+                <section id="skills" className="py-20">
+                    <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8 text-center">Mes compétences
+                        informatiques</h2>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        {techSkills.map((skill) => (
+                            <Popover key={skill.name} open={openTechPopover === skill.name}
+                                     onOpenChange={(open) => setOpenTechPopover(open ? skill.name : null)}>
+                                <PopoverTrigger asChild>
+                                    <Button
+                                        variant="outline"
+                                        className="w-full h-full bg-white dark:bg-gray-800 rounded-lg shadow p-4 text-center hover:border-gray-200 dark:hover:border-gray-600 transition-colors duration-200"
+                                    >
+                                        <span className="font-medium text-gray-800 dark:text-white">{skill.name}</span>
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-64 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+                                    <p className="text-sm text-gray-600 dark:text-gray-300">{skill.info}</p>
+                                </PopoverContent>
+                            </Popover>
+                        ))}
+                    </div>
+                </section>
+
+                {/* Soft Skills Section */}
+                <section className="py-20">
+                    <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8 text-center">Mes compétences humaines</h2>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        {softSkills.map((skill) => (
+                            <Popover key={skill.name} open={openSoftPopover === skill.name} onOpenChange={(open) => setOpenSoftPopover(open ? skill.name : null)}>
+                                <PopoverTrigger asChild>
+                                    <Button
+                                        variant="outline"
+                                        className="w-full h-full bg-white dark:bg-gray-800 rounded-lg shadow p-4 text-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                                    >
+                                        <span className="font-medium text-gray-800 dark:text-white">{skill.name}</span>
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-64 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+                                    <p className="text-sm text-gray-600 dark:text-gray-300">{skill.info}</p>
+                                </PopoverContent>
+                            </Popover>
+                        ))}
+                    </div>
+                </section>
+
+                {/* Projects Section */}
+                <section id="projects" className="py-20">
+                    <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8 text-center">Mes Projets</h2>
+                    <div className="grid md:grid-cols-2 gap-8">
+                        {[
+                            { title: 'Collaborative Website', description: 'Dans le contexte du marathon du web, j\'ai pu travailler avec une équipe de 9 membres : 4 Infos et 5 MMI afin de réaliser un site internet en 48h.\n' +
+                                    '\n' +
+                                    'Ce site internet regroupe des histoires interactives où le héros est le lecteur. Il doit faire des choix qui influenceront la suite de l\'histoire. ' },
+                            { title: 'Unity Game', description: 'à remplir' },
+                            { title: 'Python Race Car Game', description: ' Ce projet personnel a été réalisé en Python. Il s\'agit d\'un jeu de courses qui demande à l\'utilisateur de faire les bons choix pour gagner les duels.\n' +
+                                    '\n' +
+                                    'Afin d\'avoir un jeu réaliste et varié, j\'ai récupéré les données du jeu de course Forza Horizon 5 sur le wiki de Fandom. J\'ai ensuite créé un fichier CSV avec les données, afin de récuperé les informations en direct via des fonctions. En effet, 3 voitures sont tirées aléatoirement pour chaque duel, l\'utilisateur doit choisir la voiture qui a le plus de chance de gagner contre son adversaire.' },
+                            { title: 'Portfolio Website', description: 'Ce site internet, codé en Next.js et tailwind CSS' }
+                        ].map((project, index) => (
+                            <div key={index} className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                                <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">{project.title}</h3>
+                                <p className="text-gray-600 dark:text-gray-300">{project.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                {/* Contact Section */}
+                <section id="contact" className="py-20">
+                    <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8 text-center">Me Contacter</h2>
+                    <div className="flex justify-center space-x-6">
+                        <a href="mailto:copinethan@gmail.com" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
+                                 stroke="currentColor" className="size-6">
+                                <path d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/>
+                            </svg>
+                        </a>
+                        <a href="https://fr.linkedin.com/in/ethan-copin" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                            <span className="[&>svg]:h-5 [&>svg]:w-5">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
+                                    <path d="M100.3 448H7.4V148.9h92.9zM53.8 108.1C24.1 108.1 0 83.5 0 53.8a53.8 53.8 0 0 1 107.6 0c0 29.7-24.1 54.3-53.8 54.3zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V448z"/>
+                                </svg>
+                            </span>
+                        </a>
+                    </div>
+                </section>
+            </main>
+
+            {/* Footer */}
+            <footer className="bg-gray-800 dark:bg-gray-900 text-white py-4">
+                <div className="container mx-auto px-4 text-center">
+                    <p>&copy; 2024 Ethan COPIN. All rights reserved.</p>
+                </div>
+            </footer>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+    )
 }
