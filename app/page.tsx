@@ -29,6 +29,25 @@ const softSkills = [
     { name: 'Créativité', info: 'Approche innovante dans la conception de solutions' }
 ]
 
+const projects = [
+    { title: 'Collaborative Website', description: 'Dans le contexte du marathon du web, j\'ai pu travailler avec une équipe de 9 membres : 4 Infos et 5 MMI afin de réaliser un site internet en 48h.\n' +
+            '\n' +
+            'Ce site internet regroupe des histoires interactives où le héros est le lecteur. Il doit faire des choix qui influenceront la suite de l\'histoire. '
+    },
+    {
+        title: 'Unity Game',
+        description: 'Ce projet est un jeu incrémental en 3D, développé en C# sur Unity. Le jeu offre une expérience à la troisième personne, où les joueurs peuvent évoluer de manière satisfaisante et addictive. Le but était de tester et d\'approfondir mes compétences en C# et en développement de jeux Unity. C\'était un défi intéressant qui a renforcé ma passion pour le développement de jeux vidéos.'
+    },
+    { title: 'Python Race Car Game', description: ' Ce projet personnel a été réalisé en Python. Il s\'agit d\'un jeu de courses qui demande à l\'utilisateur de faire les bons choix pour gagner les duels.\n' +
+            '\n' +
+            'Afin d\'avoir un jeu réaliste et varié, j\'ai récupéré les données du jeu de course Forza Horizon 5 sur le wiki de Fandom. J\'ai ensuite créé un fichier CSV avec les données, afin de récuperé les informations en direct via des fonctions. En effet, 3 voitures sont tirées aléatoirement pour chaque duel, l\'utilisateur doit choisir la voiture qui a le plus de chance de gagner contre son adversaire.'
+    },
+    {
+        title: 'Portfolio Website',
+        description: 'Ce site internet, codé en Next.js et tailwind CSS, est particulièrement écoresponsable. Aucune image n\'est utilisée pour minimiser le temps de chargement et l\'utilisation de la bande passante. De plus, le code a été optimisé pour assurer une performance maximale, réduisant ainsi l\'utilisation des ressources et, par conséquent, son empreinte carbone.'
+    }
+]
+
 export default function Home() {
     const [openTechPopover, setOpenTechPopover] = useState<string | null>(null)
     const [openSoftPopover, setOpenSoftPopover] = useState<string | null>(null)
@@ -140,19 +159,10 @@ export default function Home() {
                 {/* Projects Section */}
                 <section id="projects" className="py-20">
                     <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8 text-center">Mes Projets</h2>
-                    <div className="grid md:grid-cols-2 gap-8">
-                        {[
-                            { title: 'Collaborative Website', description: 'Dans le contexte du marathon du web, j\'ai pu travailler avec une équipe de 9 membres : 4 Infos et 5 MMI afin de réaliser un site internet en 48h.\n' +
-                                    '\n' +
-                                    'Ce site internet regroupe des histoires interactives où le héros est le lecteur. Il doit faire des choix qui influenceront la suite de l\'histoire. ' },
-                            { title: 'Unity Game', description: 'à remplir' },
-                            { title: 'Python Race Car Game', description: ' Ce projet personnel a été réalisé en Python. Il s\'agit d\'un jeu de courses qui demande à l\'utilisateur de faire les bons choix pour gagner les duels.\n' +
-                                    '\n' +
-                                    'Afin d\'avoir un jeu réaliste et varié, j\'ai récupéré les données du jeu de course Forza Horizon 5 sur le wiki de Fandom. J\'ai ensuite créé un fichier CSV avec les données, afin de récuperé les informations en direct via des fonctions. En effet, 3 voitures sont tirées aléatoirement pour chaque duel, l\'utilisateur doit choisir la voiture qui a le plus de chance de gagner contre son adversaire.' },
-                            { title: 'Portfolio Website', description: 'Ce site internet, codé en Next.js et tailwind CSS' }
-                        ].map((project, index) => (
-                            <div key={index} className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-                                <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">{project.title}</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {projects.map((project, index) => (
+                            <div key={index} className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                                <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-4">{project.title}</h3>
                                 <p className="text-gray-600 dark:text-gray-300">{project.description}</p>
                             </div>
                         ))}
@@ -163,16 +173,23 @@ export default function Home() {
                 <section id="contact" className="py-20">
                     <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8 text-center">Me Contacter</h2>
                     <div className="flex justify-center space-x-6">
-                        <a href="mailto:copinethan@gmail.com" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                        <a href="#" onClick={(e) => {
+                            e.preventDefault();
+                            navigator.clipboard.writeText('copinethan@gmail.com')
+                            alert('Adresse e-mail copiée dans le presse-papier');
+                        }} className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
                                  stroke="currentColor" className="size-6">
-                                <path d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/>
+                                <path
+                                    d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/>
                             </svg>
                         </a>
-                        <a href="https://fr.linkedin.com/in/ethan-copin" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                        <a href="https://fr.linkedin.com/in/ethan-copin" target="_blank" rel="noopener noreferrer"
+                           className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
                             <span className="[&>svg]:h-5 [&>svg]:w-5">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
-                                    <path d="M100.3 448H7.4V148.9h92.9zM53.8 108.1C24.1 108.1 0 83.5 0 53.8a53.8 53.8 0 0 1 107.6 0c0 29.7-24.1 54.3-53.8 54.3zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V448z"/>
+                                    <path
+                                        d="M100.3 448H7.4V148.9h92.9zM53.8 108.1C24.1 108.1 0 83.5 0 53.8a53.8 53.8 0 0 1 107.6 0c0 29.7-24.1 54.3-53.8 54.3zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V448z"/>
                                 </svg>
                             </span>
                         </a>
