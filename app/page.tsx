@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { useTheme } from 'next-themes'
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Button } from "@/components/ui/button"
-import { Moon, Sun } from 'lucide-react'
+import{FaMoon, FaSun} from 'react-icons/fa'
 
 const techSkills = [
     { name: 'JavaScript', info: 'Expérience en développement front-end/back-end avec Node.js et Angular' },
@@ -83,9 +83,9 @@ export default function Home() {
                                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                                 className="ml-4"
                             >
-                                <Sun
+                                <FaSun
                                     className="h-[1.5rem] w-[1.5rem] text-yellow-500 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"/>
-                                <Moon
+                                <FaMoon
                                     className="absolute h-[1.5rem] w-[1.5rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"/>
                                 <span className="sr-only">Toggle theme</span>
                             </Button>
